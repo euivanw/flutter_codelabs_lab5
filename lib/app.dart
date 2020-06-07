@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
+import 'busca_tab.dart';
+import 'carrinho_tab.dart';
+import 'produtos_tab.dart';
+
 class AppLojaCupertino extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -21,11 +25,56 @@ class AppLojaCupertino extends StatelessWidget {
 class PaginaPrincipalLojaCupertino extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        middle: Text('Loja Cupertino'),
+    return CupertinoTabScaffold(
+      tabBar: CupertinoTabBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.home),
+            title: Text('Produtos'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.search),
+            title: Text('Busca'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.shopping_cart),
+            title: Text('Carrrinho'),
+          ),
+        ],
       ),
-      child: SizedBox(),
+      tabBuilder: (context, index) {
+        CupertinoTabView returnValue;
+        switch (index) {
+          case 0:
+            returnValue = CupertinoTabView(
+              builder: (context) {
+                return CupertinoPageScaffold(
+                  child: ProdutosTab(),
+                );
+              },
+            );
+            break;
+          case 1:
+            returnValue = CupertinoTabView(
+              builder: (context) {
+                return CupertinoPageScaffold(
+                  child: BuscaTab(),
+                );
+              },
+            );
+            break;
+          case 2:
+            returnValue = CupertinoTabView(
+              builder: (context) {
+                return CupertinoPageScaffold(
+                  child: CarrinhoTab(),
+                );
+              },
+            );
+            break;
+        }
+        return returnValue;
+      },
     );
   }
 }
