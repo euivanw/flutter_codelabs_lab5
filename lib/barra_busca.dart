@@ -36,6 +36,7 @@ class BarraBusca extends StatelessWidget {
                 focusNode: focusNode,
                 style: Styles.textoPesquisa,
                 cursorColor: Styles.cursorPesquisaCor,
+                decoration: BoxDecoration(),
               ),
             ),
             GestureDetector(
