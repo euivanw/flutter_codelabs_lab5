@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
-import 'model/app_state_model.dart';
+import 'modelo/modelo_estado_app.dart';
 
 class CarrinhoTab extends StatefulWidget {
   @override
@@ -13,7 +13,7 @@ class CarrinhoTab extends StatefulWidget {
 class _CarrinhoTabState extends State<CarrinhoTab> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppStateModel>(
+    return Consumer<ModeloEstadoApp>(
       builder: (context, model, child) {
         return const CustomScrollView(
           slivers: <Widget>[

@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
-import 'model/app_state_model.dart';
+import 'modelo/modelo_estado_app.dart';
 
 class ProdutosTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppStateModel>(
+    return Consumer<ModeloEstadoApp>(
       builder: (context, model, child) {
         return const CustomScrollView(
           slivers: <Widget>[
