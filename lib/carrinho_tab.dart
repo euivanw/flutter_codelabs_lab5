@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'modelo/modelo_estado_app.dart';
+import 'styles.dart';
+
+const double _kAlturaSeletorData = 216;
 
 class CarrinhoTab extends StatefulWidget {
   @override
@@ -112,6 +116,49 @@ class _CarrinhoTabState extends State<CarrinhoTab> {
     );
   }
 
+  Widget _construirSeletorData(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: const <Widget>[
+                Icon(
+                  CupertinoIcons.clock,
+                  color: CupertinoColors.lightBackgroundGray,
+                  size: 28,
+                ),
+                SizedBox(width: 6),
+                Text(
+                  'Data de entrega',
+                  style: Styles.textoTempoEntrega,
+                ),
+              ],
+            ),
+            Text(
+              DateFormat.yMMMd().add_jm().format(dateTime),
+              style: Styles.tempoEntrega,
+            ),
+          ],
+        ),
+        Container(
+          height: _kAlturaSeletorData,
+          child: CupertinoDatePicker(
+            mode: CupertinoDatePickerMode.dateAndTime,
+            initialDateTime: dateTime,
+            onDateTimeChanged: (novaDataEntrega) {
+              setState(() {
+                dateTime = novaDataEntrega;
+              });
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
   SliverChildBuilderDelegate _construirFormulario(ModeloEstadoApp modelo) {
     return SliverChildBuilderDelegate((context, index) {
       switch (index) {
@@ -130,8 +177,13 @@ class _CarrinhoTabState extends State<CarrinhoTab> {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: _construirCampoLocalizacao(),
           );
+        case 3:
+          return Padding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+            child: _construirSeletorData(context),
+          );
         default:
-        // Do nothing. For now.
+        // Não faz nada, por enquanto.
       }
       return null;
     });
