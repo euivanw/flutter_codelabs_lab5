@@ -1,16 +1,15 @@
-# flutter_codelabs_lab5
+# Construindo um aplicativo Cupertino com Flutter
 
-A new Flutter project.
+Este projeto contém o código fonte codelab [Building a Cupertino app with Flutter](https://codelabs.developers.google.com/codelabs/flutter-cupertino) que foi traduzido por mim e disponibilizado em [Construindo um aplicativo Cupertino com Flutter](https://ivanwhm.gitbook.io/laboratorios-de-codigo-do-flutter/construindo-um-aplicativo-cupertino-com-flutter/introducao).
 
-## Getting Started
+Todo o código foi adaptado para que você possa ter a melhor experiência em aprender Flutter sem a barreira do idioma Inglês.
 
-This project is a starting point for a Flutter application.
+Acompanhe todos os laboratórios de código Flutter traduzidos no endereço [https://ivanwhm.gitbook.io/laboratorios-de-codigo-do-flutter/](https://ivanwhm.gitbook.io/laboratorios-de-codigo-do-flutter/)
 
-A few resources to get you started if this is your first Flutter project:
+Aba Produtos | Aba Busca | Aba Carrinho
+---|---|---
+<img src="./assets/produtos.png" alt="iOS" width="400"/> | <img src="./assets/busca.png" alt="iOS" width="400"/> | <img src="./assets/carrinho.png" alt="iOS" width="400"/>
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Feito com &hearts; por Ivan Wilhelm.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Codificado no [Visual Studio Code](https://code.visualstudio.com) da [Microsoft](https://www.microsoft.com.br)
