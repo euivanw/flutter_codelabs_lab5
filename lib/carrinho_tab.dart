@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'modelo/modelo_estado_app.dart';
+import 'modelo/produto.dart';
 import 'styles.dart';
 
 const double _kAlturaSeletorData = 216;
@@ -42,6 +43,7 @@ class _CarrinhoTabState extends State<CarrinhoTab> {
   String localizacao;
   String pin;
   DateTime dateTime = DateTime.now();
+  final _formatoMoeda = NumberFormat.currency(symbol: '\$');
 
   Widget _construirCampoNome() {
     return CupertinoTextField(
@@ -161,6 +163,7 @@ class _CarrinhoTabState extends State<CarrinhoTab> {
 
   SliverChildBuilderDelegate _construirFormulario(ModeloEstadoApp modelo) {
     return SliverChildBuilderDelegate((context, index) {
+      final indiceProduto = index - 4;
       switch (index) {
         case 0:
           return Padding(
@@ -183,9 +186,126 @@ class _CarrinhoTabState extends State<CarrinhoTab> {
             child: _construirSeletorData(context),
           );
         default:
-        // Não faz nada, por enquanto.
+          if (modelo.produtosNoCarrinho.length > indiceProduto) {
+            return ItemCarrinho(
+              indice: index,
+              produto: modelo.obtemProdutoPorCodigo(modelo.produtosNoCarrinho.keys.toList()[indiceProduto]),
+              quantidade: modelo.produtosNoCarrinho.values.toList()[indiceProduto],
+              ultimoItem: indiceProduto == modelo.produtosNoCarrinho.length - 1,
+              formatador: _formatoMoeda,
+            );
+          } else if (modelo.produtosNoCarrinho.keys.length == indiceProduto && modelo.produtosNoCarrinho.isNotEmpty) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      Text(
+                        'Entrega '
+                        '${_formatoMoeda.format(modelo.custoDeEntrega)}',
+                        style: Styles.linhaProdutoPrecoDoItem,
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        'Imposto ${_formatoMoeda.format(modelo.imposto)}',
+                        style: Styles.linhaProdutoPrecoDoItem,
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        'Total  ${_formatoMoeda.format(modelo.totalCost)}',
+                        style: Styles.linhaProdutoTotal,
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            );
+          }
       }
       return null;
     });
+  }
+}
+
+class ItemCarrinho extends StatelessWidget {
+  const ItemCarrinho({
+    @required this.indice,
+    @required this.produto,
+    @required this.ultimoItem,
+    @required this.quantidade,
+    @required this.formatador,
+  });
+
+  final Produto produto;
+  final int indice;
+  final bool ultimoItem;
+  final int quantidade;
+  final NumberFormat formatador;
+
+  @override
+  Widget build(BuildContext context) {
+    final row = SafeArea(
+      top: false,
+      bottom: false,
+      child: Padding(
+        padding: const EdgeInsets.only(
+          left: 16,
+          top: 8,
+          bottom: 8,
+          right: 8,
+        ),
+        child: Row(
+          children: <Widget>[
+            ClipRRect(
+              borderRadius: BorderRadius.circular(4),
+              child: Image.asset(
+                produto.assetName,
+                package: produto.assetPackage,
+                fit: BoxFit.cover,
+                width: 40,
+                height: 40,
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          produto.nome,
+                          style: Styles.linhaProdutoNomeDoItem,
+                        ),
+                        Text(
+                          '${formatador.format(quantidade * produto.preco)}',
+                          style: Styles.linhaProdutoNomeDoItem,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 4,
+                    ),
+                    Text(
+                      '${quantidade > 1 ? '$quantidade x ' : ''}'
+                      '${formatador.format(produto.preco)}',
+                      style: Styles.linhaProdutoPrecoDoItem,
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+
+    return row;
   }
 }
